@@ -1,44 +1,23 @@
 extends MenuButton
 
 onready var menu = get_popup()
-onready var menu_buttons = {
-	"New": 0,
-	"Open": 1,
-	"Save As": 2,
-	"Save": 3,
-	"Quit": 4
-}
+onready var menu_buttons = ["New", "Open", "Save As", "Save", "Quit"]
 
 func _ready():
-	for key in menu_buttons:
-		menu.add_item(key, menu_buttons[key])
+	for i in menu_buttons:
+		menu.add_item(i, menu_buttons.find(i))
 		
 	menu.connect("id_pressed", self, "_on_file_select")
 
 func _on_file_select(ID):
 	match ID:
 		0:
-			_new()
+			pass
 		1:
-			_open()
+			pass
 		2:
-			_save_as()
+			pass
 		3:
-			_save()
+			pass
 		4:
-			_quit()
-
-func _new():
-	pass
-	
-func _open():
-	pass
-	
-func _save_as():
-	pass
-	
-func _save():
-	pass
-	
-func _quit():
-	get_tree().quit()
+			get_tree().quit()
