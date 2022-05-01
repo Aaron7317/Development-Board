@@ -4,9 +4,6 @@ onready var insert = get_node("TopBar/HBoxContainer/InsertButton")
 onready var object_inserter = get_node("ObjectInserter")
 onready var object_selector = get_node("ObjectInserter")
 
-onready var camera = get_node("Camera2D")
-export var camera_speed = 10
-
 onready var mode = object_mode.NONE
 enum object_mode {
 	NONE,
@@ -15,17 +12,7 @@ enum object_mode {
 }
 
 func _ready():
-	camera.current = true
 	insert.connect("insert_item", self, "_set_inserter_object")
-
-func _unhandled_input(event):
-	if (event is InputEventMouseButton && event.is_pressed()):
-		if (event.button_index == BUTTON_WHEEL_UP):
-			camera.zoom -= Vector2(0.1, 0.1)
-		if (event.button_index == BUTTON_WHEEL_DOWN):
-			camera.zoom += Vector2(0.1, 0.1)
-	if (event is InputEventMouseMotion && Input.is_action_pressed("mb_middle")):
-		camera.global_position -= event.relative * camera.zoom
 
 func _set_inserter_object(ID):
 	mode = object_mode.INSERT
