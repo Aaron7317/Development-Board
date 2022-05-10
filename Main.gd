@@ -11,8 +11,13 @@ enum object_mode {
 	SELECT
 }
 
+onready var test_transform = get_node("TransformRect")
+
 func _ready():
 	insert.connect("insert_item", self, "_set_inserter_object")
+	test_transform.set_visible(true)
+	test_transform._rect.size = Vector2(100, 100)
+	test_transform._rect.position = Vector2(100, 100)
 
 func _set_inserter_object(ID):
 	mode = object_mode.INSERT
