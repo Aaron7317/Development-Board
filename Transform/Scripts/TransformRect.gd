@@ -2,7 +2,7 @@
 extends Node2D
 
 export var color : Color = Color("#0000ff") setget set_color
-var _rect : Rect2
+var _rect : Rect2 = Rect2(Vector2(100, 100), Vector2(100, 100))
 export var is_visible : bool = true setget set_visible
 var anchors : Array
 var dragged_anchor : Dictionary = {}
@@ -18,10 +18,15 @@ const FILL_COLOR = Color("#ffffff")
 func _ready():
 	pass
 
+func _process(delta):
+	update()
+
 func _draw() -> void:
 #	if is_visible:
 #		print("returning")
 #		return
+# Stuff is getting drawn in the wrong place
+	print (_rect.position)
 	draw_rect(_rect, color, false)
 	calculate_anchors()
 
@@ -72,19 +77,41 @@ func drag_to(pos: Vector2) -> void:
 		Anchors.BOTTOM_RIGHT:
 			_rect.size = pos - dragged_start_rect.position
 
-func forward_input(event : InputEvent) -> bool:
-	if not is_visible:
-		return false
-
+func _input(event : InputEvent):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if not dragged_anchor and event.is_pressed():
 			for anchor in anchors: 
 				if not anchor['rect'].has_point(event.position):
+					print(event.position)
+					print(anchor)
 					continue
 				dragged_anchor = anchor
+				print("set dragged anchor")
 
 				return true
 		elif dragged_anchor and not event.is_pressed():
 			drag_to(event.position)
-
+			dragged_anchor = {}
+	if event is InputEventMouseMotion:
+		drag_to(event.position)
 	return false
+
+
+#func forward_input(event : InputEvent) -> bool:
+##	if not is_visible:
+##		return false
+#	print("stuff")
+#	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+#		if not dragged_anchor and event.is_pressed():
+#			for anchor in anchors: 
+#				if not anchor['rect'].has_point(event.position):
+#					print(event.position)
+#					continue
+#				dragged_anchor = anchor
+#				print("set dragged anchor")
+#
+#				return true
+#		elif dragged_anchor and not event.is_pressed():
+#			drag_to(event.position)
+#
+#	return false

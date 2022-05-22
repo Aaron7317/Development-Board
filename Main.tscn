@@ -28,7 +28,6 @@ script = ExtResource( 4 )
 script = ExtResource( 6 )
 
 [node name="TransformRect" parent="." instance=ExtResource( 5 )]
-position = Vector2( 96, 90 )
 
 [connection signal="mouse_enter_ui" from="TopBar" to="." method="_on_TopBar_mouse_enter_ui"]
 [connection signal="mouse_exit_ui" from="TopBar" to="." method="_on_TopBar_mouse_exit_ui"]
